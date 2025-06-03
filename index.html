@@ -68,6 +68,42 @@
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
         
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .refresh-btn, .generate-btn {
+            border: none;
+            padding: 12px 25px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        
+        .refresh-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+        
+        .refresh-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .generate-btn {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(40, 167, 69, 0.3);
+        }
+        
         .stats {
             background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
@@ -125,51 +161,57 @@
             box-shadow: 0 20px 40px rgba(0,0,0,0.15);
         }
         
+        .meme-image-container {
+            width: 100%;
+            max-height: 400px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8f9fa;
+        }
+        
         .meme-item img {
             width: 100%;
-            height: 280px;
-            object-fit: cover;
+            height: auto;
+            max-height: 400px;
+            object-fit: contain;
             cursor: pointer;
             transition: transform 0.3s ease;
         }
         
         .meme-item img:hover {
-            transform: scale(1.05);
+            transform: scale(1.02);
         }
         
         .meme-info {
-            padding: 20px;
+            padding: 15px 20px;
             background: linear-gradient(135deg, #f7fafc, #edf2f7);
-        }
-        
-        .meme-filename {
-            font-size: 14px;
-            color: #4a5568;
-            margin-bottom: 8px;
-            font-weight: 600;
-            word-break: break-word;
+            text-align: center;
         }
         
         .meme-meta {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
+            gap: 15px;
         }
         
         .meme-size {
             font-size: 12px;
             color: #718096;
             background: #e2e8f0;
-            padding: 4px 10px;
-            border-radius: 10px;
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-weight: 500;
         }
         
         .meme-type {
             font-size: 12px;
             color: #667eea;
             background: rgba(102, 126, 234, 0.1);
-            padding: 4px 10px;
-            border-radius: 10px;
+            padding: 6px 12px;
+            border-radius: 12px;
             font-weight: 600;
         }
         
@@ -216,20 +258,118 @@
             padding: 30px;
         }
         
-        .refresh-btn {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+        /* СТИЛИ ДЛЯ ГЕНЕРАТОРА СТАТИЧЕСКОЙ ВЕРСИИ */
+        .static-generator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .generator-modal {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .generator-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 15px;
+        }
+
+        .generator-header h3 {
+            margin: 0;
+            color: #333;
+        }
+
+        .close-btn {
+            background: #dc3545;
             color: white;
             border: none;
-            padding: 12px 25px;
-            border-radius: 20px;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .generator-actions {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 15px;
             cursor: pointer;
             font-weight: 600;
             transition: all 0.3s ease;
         }
-        
-        .refresh-btn:hover {
+
+        .action-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 8px 16px rgba(0, 123, 255, 0.3);
+        }
+
+        .code-preview {
+            margin: 20px 0;
+        }
+
+        .code-preview textarea {
+            width: 100%;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            background: #f8f9fa;
+            resize: vertical;
+        }
+
+        .instructions {
+            background: linear-gradient(135deg, #e3f2fd, #f3e5f5);
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 4px solid #2196f3;
+        }
+
+        .instructions ol {
+            margin: 10px 0 0 0;
+            padding-left: 20px;
+        }
+
+        .instructions li {
+            margin: 8px 0;
+            line-height: 1.5;
+        }
+
+        .instructions code {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 13px;
         }
         
         @media (max-width: 768px) {
@@ -242,9 +382,21 @@
                 min-width: auto;
             }
             
+            .button-group {
+                justify-content: center;
+            }
+            
             .gallery {
                 grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
                 gap: 20px;
+            }
+            
+            .generator-actions {
+                flex-direction: column;
+            }
+            
+            .action-btn {
+                width: 100%;
             }
         }
     </style>
@@ -258,7 +410,10 @@
             <div class="search-box">
                 <input type="text" id="searchInput" placeholder="🔍 Поиск по названию файла..." onkeyup="filterMemes()">
             </div>
-            <button class="refresh-btn" onclick="loadMemes()">🔄 Обновить</button>
+            <div class="button-group">
+                <button class="refresh-btn" onclick="loadMemes()">🔄 Обновить</button>
+                <button class="generate-btn" onclick="generateStaticVersion()">📄 Создать статическую версию</button>
+            </div>
             <div class="stats" id="stats">
                 <div class="loading">Загрузка мемов...</div>
             </div>
@@ -273,9 +428,46 @@
             <p>1. Загружай любые картинки в папку <code>images/</code></p>
             <p>2. Обновляй страницу или нажимай "Обновить"</p>
             <p>3. Все новые мемы появятся автоматически!</p>
+            <p>4. Для ботов создавай статическую версию кнопкой выше</p>
             <p style="margin-top: 20px; color: #a0aec0;">
                 📅 Последнее обновление: <span id="lastUpdate"></span>
             </p>
+        </div>
+    </div>
+
+    <!-- МОДАЛЬНОЕ ОКНО ГЕНЕРАТОРА -->
+    <div id="staticGenerator" class="static-generator">
+        <div class="generator-modal">
+            <div class="generator-header">
+                <h3>🤖 Генератор статической версии для ботов</h3>
+                <button class="close-btn" onclick="closeGenerator()">✕</button>
+            </div>
+            
+            <div class="generator-content">
+                <p>Эта версия будет содержать статические &lt;img&gt; теги, которые смогут читать боты:</p>
+                
+                <div class="generator-actions">
+                    <button class="action-btn" onclick="copyStaticHTML()">📋 Скопировать HTML-код</button>
+                    <button class="action-btn" onclick="downloadStaticHTML()">💾 Скачать файл static.html</button>
+                </div>
+                
+                <div class="code-preview">
+                    <h4>📝 Превью кода:</h4>
+                    <textarea id="staticHTML" readonly rows="12" placeholder="Нажми кнопку генерации..."></textarea>
+                </div>
+                
+                <div class="instructions">
+                    <h4>📋 Инструкция:</h4>
+                    <ol>
+                        <li>Нажми "💾 Скачать файл static.html" - файл загрузится на компьютер</li>
+                        <li>Перейди в свой репозиторий на GitHub</li>
+                        <li>Перетащи скачанный файл <code>static.html</code> в корень репозитория</li>
+                        <li>Нажми "Commit changes"</li>
+                        <li>Теперь боты смогут читать: <code>username.github.io/meme-collection/static.html</code></li>
+                    </ol>
+                    <p><strong>💡 Совет:</strong> При добавлении новых мемов просто повтори процедуру!</p>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -317,7 +509,7 @@
                     file.type === 'file' && imageExtensions.test(file.name)
                 );
                 
-                // Сортируем по дате (новые сначала) или по имени
+                // Сортируем по имени
                 imageFiles.sort((a, b) => a.name.localeCompare(b.name));
                 
                 allMemes = imageFiles;
@@ -353,13 +545,14 @@
                 const fileExtension = file.name.split('.').pop().toUpperCase();
                 return `
                     <div class="meme-item" style="animation-delay: ${index * 0.1}s">
-                        <img src="https://raw.githubusercontent.com/${USERNAME}/${REPO}/main/${IMAGES_FOLDER}/${file.name}" 
-                             alt="Мем: ${file.name}" 
-                             onclick="openFullImage('https://raw.githubusercontent.com/${USERNAME}/${REPO}/main/${IMAGES_FOLDER}/${file.name}')"
-                             onerror="handleImageError(this)"
-                             loading="lazy">
+                        <div class="meme-image-container">
+                            <img src="https://raw.githubusercontent.com/${USERNAME}/${REPO}/main/${IMAGES_FOLDER}/${file.name}" 
+                                 alt="Мем: ${file.name}" 
+                                 onclick="openFullImage('https://raw.githubusercontent.com/${USERNAME}/${REPO}/main/${IMAGES_FOLDER}/${file.name}')"
+                                 onerror="handleImageError(this)"
+                                 loading="lazy">
+                        </div>
                         <div class="meme-info">
-                            <div class="meme-filename">📄 ${file.name}</div>
                             <div class="meme-meta">
                                 <span class="meme-size">📊 ${formatFileSize(file.size)}</span>
                                 <span class="meme-type">${fileExtension}</span>
@@ -423,6 +616,248 @@
             `;
         }
         
+        // ===== ГЕНЕРАЦИЯ СТАТИЧЕСКОЙ ВЕРСИИ =====
+        async function generateStaticVersion() {
+            try {
+                document.getElementById('staticGenerator').style.display = 'flex';
+                
+                // Получаем список файлов (используем уже загруженные или загружаем заново)
+                let imageFiles = allMemes;
+                if (imageFiles.length === 0) {
+                    const response = await fetch(`https://api.github.com/repos/${USERNAME}/${REPO}/contents/${IMAGES_FOLDER}`);
+                    if (!response.ok) throw new Error('Не удалось получить список файлов');
+                    
+                    const files = await response.json();
+                    const imageExtensions = /\.(jpg|jpeg|png|gif|webp|bmp|svg|ico|tiff)$/i;
+                    imageFiles = files.filter(file => 
+                        file.type === 'file' && imageExtensions.test(file.name)
+                    );
+                }
+                
+                // Генерируем HTML
+                const staticHTML = generateStaticHTML(imageFiles);
+                document.getElementById('staticHTML').value = staticHTML;
+                
+            } catch (error) {
+                alert('Ошибка при генерации: ' + error.message);
+            }
+        }
+
+        function generateStaticHTML(imageFiles) {
+            const imagesHTML = imageFiles.map(file => {
+                const fileName = file.name;
+                const fileNameForAlt = fileName.replace(/\.(jpg|jpeg|png|gif|webp|bmp|svg|ico|tiff)$/i, '');
+                const fileExtension = fileName.split('.').pop().toUpperCase();
+                
+                return `        <div class="meme-item">
+            <div class="meme-image-container">
+                <img src="images/${fileName}" alt="Мем: ${fileNameForAlt}" loading="lazy">
+            </div>
+            <div class="meme-info">
+                <div class="meme-meta">
+                    <span class="meme-size">📊 ${formatFileSize(file.size)}</span>
+                    <span class="meme-type">${fileExtension}</span>
+                </div>
+            </div>
+        </div>`;
+            }).join('\n');
+
+            return `<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🤖 Статическая коллекция мемов для ботов</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #718096;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+        
+        .stats {
+            text-align: center;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+        }
+        
+        .meme-item {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border: 1px solid #e2e8f0;
+        }
+        
+        .meme-image-container {
+            width: 100%;
+            max-height: 400px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8f9fa;
+        }
+        
+        .meme-item img {
+            width: 100%;
+            height: auto;
+            max-height: 400px;
+            object-fit: contain;
+        }
+        
+        .meme-info {
+            padding: 15px 20px;
+            background: linear-gradient(135deg, #f7fafc, #edf2f7);
+            text-align: center;
+        }
+        
+        .meme-meta {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .meme-size {
+            font-size: 12px;
+            color: #718096;
+            background: #e2e8f0;
+            padding: 6px 12px;
+            border-radius: 12px;
+        }
+        
+        .meme-type {
+            font-size: 12px;
+            color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            color: #718096;
+            border-top: 2px solid #e2e8f0;
+            padding-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 Статическая коллекция мемов</h1>
+        <p class="subtitle">Версия для анализа ботами и ИИ</p>
+        
+        <div class="stats">
+            📸 Всего мемов: <strong>${imageFiles.length}</strong>
+        </div>
+        
+        <div class="gallery">
+${imagesHTML}
+        </div>
+        
+        <div class="footer">
+            <p><strong>🤖 Эта страница создана для ботов</strong></p>
+            <p>Все изображения загружены статически и доступны для анализа ИИ</p>
+            <p>📅 Создано: ${new Date().toLocaleDateString('ru-RU')}</p>
+        </div>
+    </div>
+</body>
+</html>`;
+        }
+
+        function copyStaticHTML() {
+            const textarea = document.getElementById('staticHTML');
+            if (!textarea.value) {
+                alert('Сначала сгенерируй HTML-код!');
+                return;
+            }
+            
+            textarea.select();
+            document.execCommand('copy');
+            
+            // Показываем уведомление
+            const btn = event.target;
+            const originalText = btn.textContent;
+            btn.textContent = '✅ Скопировано!';
+            btn.style.background = 'linear-gradient(135deg, #28a745, #20c997)';
+            
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.style.background = 'linear-gradient(135deg, #007bff, #0056b3)';
+            }, 2000);
+        }
+
+        function downloadStaticHTML() {
+            const content = document.getElementById('staticHTML').value;
+            if (!content) {
+                alert('Сначала сгенерируй HTML-код!');
+                return;
+            }
+            
+            const blob = new Blob([content], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'static.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            // Показываем уведомление
+            const btn = event.target;
+            const originalText = btn.textContent;
+            btn.textContent = '✅ Скачано!';
+            btn.style.background = 'linear-gradient(135deg, #28a745, #20c997)';
+            
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.style.background = 'linear-gradient(135deg, #007bff, #0056b3)';
+            }, 2000);
+        }
+
+        function closeGenerator() {
+            document.getElementById('staticGenerator').style.display = 'none';
+        }
+        
         // ===== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ =====
         function formatFileSize(bytes) {
             if (bytes === 0) return '0 B';
@@ -462,9 +897,16 @@
                     filterMemes();
                 }
             });
+            
+            // Закрытие генератора по клику вне окна
+            document.getElementById('staticGenerator').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeGenerator();
+                }
+            });
         });
         
-        // ===== ДОПОЛНИТЕЛЬНЫЕ СТИЛИ ДЛЯ АНИМАЦИИ =====
+        // ===== АНИМАЦИИ =====
         const style = document.createElement('style');
         style.textContent = `
             .meme-item {
