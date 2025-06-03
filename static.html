@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🤖 Статическая коллекция мемов для ботов</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #718096;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+        
+        .stats {
+            text-align: center;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+        }
+        
+        .meme-item {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border: 1px solid #e2e8f0;
+        }
+        
+        .meme-image-container {
+            width: 100%;
+            max-height: 400px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8f9fa;
+        }
+        
+        .meme-item img {
+            width: 100%;
+            height: auto;
+            max-height: 400px;
+            object-fit: contain;
+        }
+        
+        .meme-info {
+            padding: 15px 20px;
+            background: linear-gradient(135deg, #f7fafc, #edf2f7);
+            text-align: center;
+        }
+        
+        .meme-meta {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .meme-size {
+            font-size: 12px;
+            color: #718096;
+            background: #e2e8f0;
+            padding: 6px 12px;
+            border-radius: 12px;
+        }
+        
+        .meme-type {
+            font-size: 12px;
+            color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            color: #718096;
+            border-top: 2px solid #e2e8f0;
+            padding-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 Статическая коллекция мемов</h1>
+        <p class="subtitle">Версия для анализа ботами и ИИ</p>
+        
+        <div class="stats">
+            📸 Всего мемов: <strong>2</strong>
+        </div>
+        
+        <div class="gallery">
+        <div class="meme-item">
+            <div class="meme-image-container">
+                <img src="images/IMAGE 2025-06-03 18:39:24.jpg" alt="Мем: IMAGE 2025-06-03 18:39:24" loading="lazy">
+            </div>
+            <div class="meme-info">
+                <div class="meme-meta">
+                    <span class="meme-size">📊 303.9 KB</span>
+                    <span class="meme-type">JPG</span>
+                </div>
+            </div>
+        </div>
+        <div class="meme-item">
+            <div class="meme-image-container">
+                <img src="images/IMAGE 2025-06-03 18:46:06.jpg" alt="Мем: IMAGE 2025-06-03 18:46:06" loading="lazy">
+            </div>
+            <div class="meme-info">
+                <div class="meme-meta">
+                    <span class="meme-size">📊 196.3 KB</span>
+                    <span class="meme-type">JPG</span>
+                </div>
+            </div>
+        </div>
+        </div>
+        
+        <div class="footer">
+            <p><strong>🤖 Эта страница создана для ботов</strong></p>
+            <p>Все изображения загружены статически и доступны для анализа ИИ</p>
+            <p>📅 Создано: 03.06.2025</p>
+        </div>
+    </div>
+</body>
+</html>
