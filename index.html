@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎯 Коллекция мемов для контента</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            font-weight: 700;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #718096;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .search-box {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 12px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 25px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .stats {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 20px;
+            font-weight: 600;
+            min-width: 200px;
+            text-align: center;
+        }
+        
+        .loading {
+            text-align: center;
+            font-size: 18px;
+            color: #666;
+            margin: 50px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .loading::before {
+            content: '';
+            width: 20px;
+            height: 20px;
+            border: 2px solid #e2e8f0;
+            border-top: 2px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .meme-item {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .meme-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        .meme-item img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .meme-item img:hover {
+            transform: scale(1.05);
+        }
+        
+        .meme-info {
+            padding: 20px;
+            background: linear-gradient(135deg, #f7fafc, #edf2f7);
+        }
+        
+        .meme-filename {
+            font-size: 14px;
+            color: #4a5568;
+            margin-bottom: 8px;
+            font-weight: 600;
+            word-break: break-word;
+        }
+        
+        .meme-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .meme-size {
+            font-size: 12px;
+            color: #718096;
+            background: #e2e8f0;
+            padding: 4px 10px;
+            border-radius: 10px;
+        }
+        
+        .meme-type {
+            font-size: 12px;
+            color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+            padding: 4px 10px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+        
+        .error {
+            text-align: center;
+            color: #e53e3e;
+            background: linear-gradient(135deg, #fed7d7, #feb2b2);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border: 2px solid #fc8181;
+        }
+        
+        .error h3 {
+            margin-top: 0;
+            color: #c53030;
+        }
+        
+        .error ul {
+            text-align: left;
+            max-width: 500px;
+            margin: 20px auto;
+        }
+        
+        .no-results {
+            text-align: center;
+            color: #718096;
+            font-size: 18px;
+            margin: 50px 0;
+            background: #f7fafc;
+            padding: 40px;
+            border-radius: 15px;
+            border: 2px dashed #e2e8f0;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            color: #718096;
+            border-top: 2px solid #e2e8f0;
+            padding-top: 30px;
+            background: linear-gradient(135deg, #f7fafc, #edf2f7);
+            border-radius: 15px;
+            padding: 30px;
+        }
+        
+        .refresh-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .refresh-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .search-box {
+                min-width: auto;
+            }
+            
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Коллекция мемов</h1>
+        <p class="subtitle">Автоматическая галерея для контент-маркетинга</p>
+        
+        <div class="controls">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="🔍 Поиск по названию файла..." onkeyup="filterMemes()">
+            </div>
+            <button class="refresh-btn" onclick="loadMemes()">🔄 Обновить</button>
+            <div class="stats" id="stats">
+                <div class="loading">Загрузка мемов...</div>
+            </div>
+        </div>
+        
+        <div class="gallery" id="gallery">
+            <!-- Сюда автоматически загрузятся все картинки -->
+        </div>
+        
+        <div class="footer">
+            <p><strong>🚀 Как использовать:</strong></p>
+            <p>1. Загружай любые картинки в папку <code>images/</code></p>
+            <p>2. Обновляй страницу или нажимай "Обновить"</p>
+            <p>3. Все новые мемы появятся автоматически!</p>
+            <p style="margin-top: 20px; color: #a0aec0;">
+                📅 Последнее обновление: <span id="lastUpdate"></span>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // ===== НАСТРОЙКИ РЕПОЗИТОРИЯ =====
+        const USERNAME = 'tsymb81';              // Твой GitHub username
+        const REPO = 'meme-collection';          // Название репозитория
+        const IMAGES_FOLDER = 'images';          // Папка с картинками
+        
+        // ===== ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ =====
+        let allMemes = [];
+        let isLoading = false;
+        
+        // ===== ОСНОВНАЯ ФУНКЦИЯ ЗАГРУЗКИ =====
+        async function loadMemes() {
+            if (isLoading) return;
+            
+            isLoading = true;
+            const statsElement = document.getElementById('stats');
+            const galleryElement = document.getElementById('gallery');
+            
+            try {
+                // Показываем индикатор загрузки
+                statsElement.innerHTML = '<div class="loading">Загружаю мемы...</div>';
+                galleryElement.innerHTML = '';
+                
+                // Запрос к GitHub API
+                const response = await fetch(`https://api.github.com/repos/${USERNAME}/${REPO}/contents/${IMAGES_FOLDER}`);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const files = await response.json();
+                
+                // Фильтруем только картинки
+                const imageExtensions = /\.(jpg|jpeg|png|gif|webp|bmp|svg|ico|tiff)$/i;
+                const imageFiles = files.filter(file => 
+                    file.type === 'file' && imageExtensions.test(file.name)
+                );
+                
+                // Сортируем по дате (новые сначала) или по имени
+                imageFiles.sort((a, b) => a.name.localeCompare(b.name));
+                
+                allMemes = imageFiles;
+                displayMemes(allMemes);
+                updateStats(allMemes.length);
+                
+                // Очищаем поиск при новой загрузке
+                document.getElementById('searchInput').value = '';
+                
+            } catch (error) {
+                console.error('Ошибка загрузки мемов:', error);
+                showError(error.message);
+            } finally {
+                isLoading = false;
+            }
+        }
+        
+        // ===== ОТОБРАЖЕНИЕ МЕМОВ =====
+        function displayMemes(memes) {
+            const gallery = document.getElementById('gallery');
+            
+            if (memes.length === 0) {
+                gallery.innerHTML = `
+                    <div class="no-results">
+                        <h3>📂 Мемы не найдены</h3>
+                        <p>Загрузи картинки в папку <strong>images/</strong> или измени поисковый запрос</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            gallery.innerHTML = memes.map((file, index) => {
+                const fileExtension = file.name.split('.').pop().toUpperCase();
+                return `
+                    <div class="meme-item" style="animation-delay: ${index * 0.1}s">
+                        <img src="https://raw.githubusercontent.com/${USERNAME}/${REPO}/main/${IMAGES_FOLDER}/${file.name}" 
+                             alt="Мем: ${file.name}" 
+                             onclick="openFullImage('https://raw.githubusercontent.com/${USERNAME}/${REPO}/main/${IMAGES_FOLDER}/${file.name}')"
+                             onerror="handleImageError(this)"
+                             loading="lazy">
+                        <div class="meme-info">
+                            <div class="meme-filename">📄 ${file.name}</div>
+                            <div class="meme-meta">
+                                <span class="meme-size">📊 ${formatFileSize(file.size)}</span>
+                                <span class="meme-type">${fileExtension}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        // ===== ПОИСК И ФИЛЬТРАЦИЯ =====
+        function filterMemes() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+            
+            if (!searchTerm) {
+                displayMemes(allMemes);
+                updateStats(allMemes.length);
+                return;
+            }
+            
+            const filteredMemes = allMemes.filter(file => 
+                file.name.toLowerCase().includes(searchTerm)
+            );
+            
+            displayMemes(filteredMemes);
+            updateStats(filteredMemes.length, allMemes.length);
+        }
+        
+        // ===== ОБНОВЛЕНИЕ СТАТИСТИКИ =====
+        function updateStats(shown, total = null) {
+            const statsElement = document.getElementById('stats');
+            if (total === null) {
+                statsElement.innerHTML = `📸 <strong>${shown}</strong> мемов`;
+            } else {
+                statsElement.innerHTML = `📸 <strong>${shown}</strong> из <strong>${total}</strong>`;
+            }
+        }
+        
+        // ===== ОБРАБОТКА ОШИБОК =====
+        function showError(message) {
+            const gallery = document.getElementById('gallery');
+            const statsElement = document.getElementById('stats');
+            
+            statsElement.innerHTML = '❌ Ошибка';
+            
+            gallery.innerHTML = `
+                <div class="error">
+                    <h3>❌ Не удалось загрузить мемы</h3>
+                    <p><strong>Ошибка:</strong> ${message}</p>
+                    <h4>Возможные причины:</h4>
+                    <ul>
+                        <li>Неправильный username: <code>${USERNAME}</code></li>
+                        <li>Неправильное название репозитория: <code>${REPO}</code></li>
+                        <li>Репозиторий приватный (должен быть Public)</li>
+                        <li>Папка <code>${IMAGES_FOLDER}/</code> не существует</li>
+                        <li>Нет подключения к интернету</li>
+                    </ul>
+                    <p><strong>Проверь настройки в начале HTML-файла!</strong></p>
+                    <button class="refresh-btn" onclick="loadMemes()">🔄 Попробовать снова</button>
+                </div>
+            `;
+        }
+        
+        // ===== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ =====
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 B';
+            const k = 1024;
+            const sizes = ['B', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+        }
+        
+        function openFullImage(url) {
+            window.open(url, '_blank', 'noopener,noreferrer');
+        }
+        
+        function handleImageError(img) {
+            img.parentElement.style.display = 'none';
+            console.warn('Не удалось загрузить изображение:', img.src);
+        }
+        
+        // ===== ИНИЦИАЛИЗАЦИЯ =====
+        document.addEventListener('DOMContentLoaded', function() {
+            // Устанавливаем дату последнего обновления
+            document.getElementById('lastUpdate').textContent = 
+                new Date().toLocaleDateString('ru-RU', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            
+            // Загружаем мемы
+            loadMemes();
+            
+            // Добавляем обработчик для Enter в поиске
+            document.getElementById('searchInput').addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    filterMemes();
+                }
+            });
+        });
+        
+        // ===== ДОПОЛНИТЕЛЬНЫЕ СТИЛИ ДЛЯ АНИМАЦИИ =====
+        const style = document.createElement('style');
+        style.textContent = `
+            .meme-item {
+                opacity: 0;
+                animation: fadeInUp 0.6s ease forwards;
+            }
+            
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
